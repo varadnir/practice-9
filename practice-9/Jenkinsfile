@@ -1,0 +1,43 @@
+pipeline {
+    agent any
+
+    stages {
+        stage('Checkout') {
+            steps {
+                git url: 'https://github.com/Scar2603/practice-9.git', branch: 'main'
+            }
+        }
+        
+        stage('Build') {
+            steps {
+                dir('practice-9') {
+                    bat 'mvn clean package'
+                }
+            }
+        }
+        
+        stage('Test') {
+            steps {
+                dir('practice-9') {
+                    bat 'mvn test'
+                }
+            }
+        }
+        
+        stage('Run') {
+            steps {
+                dir('practice-9') {
+                    bat 'mvn exec:java -Dexec.mainClass="com.example.App"' 
+                }
+            }
+        }
+    }
+
+    post {
+        always {
+            archiveArtifacts artifacts: 'practice-9/target/*.jar', fingerprint: true
+            
+            cleanWs()
+        }
+    }
+}
