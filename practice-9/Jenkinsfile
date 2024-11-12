@@ -4,7 +4,7 @@ pipeline {
     stages {
         stage('Checkout') {
             steps {
-                git url: 'https://github.com/Universe7Nandu/practice-9.git', branch: 'main'
+                git url: 'https://github.com/Varadnir/practice-9.git', branch: 'main'
             }
         }
         
